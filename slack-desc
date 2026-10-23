@@ -1,0 +1,15 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.
+# Leave exactly one space after each colon.
+                      |-----handy-ruler------------------------------------------------------|
+netease-cloud-music-gtk: netease-cloud-music-gtk (native GTK4 NetEase Cloud Music player)
+netease-cloud-music-gtk:
+netease-cloud-music-gtk: A Rust, GTK4 and libadwaita music player for NetEase Cloud Music.
+netease-cloud-music-gtk: Supports search, playlists, lyrics, a system tray and MPRIS.
+netease-cloud-music-gtk:
+netease-cloud-music-gtk: Includes private GTK, GLib and GStreamer libraries under /opt.
+netease-cloud-music-gtk: These libraries do not replace the system desktop libraries.
+netease-cloud-music-gtk:
+netease-cloud-music-gtk: Homepage: https://github.com/gmg137/netease-cloud-music-gtk
+netease-cloud-music-gtk:
+netease-cloud-music-gtk:

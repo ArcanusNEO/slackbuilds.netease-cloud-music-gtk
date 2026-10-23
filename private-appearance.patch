@@ -1,0 +1,18 @@
+--- a/src/application.rs
++++ b/src/application.rs
+@@ -243,6 +243,15 @@
+     }
+ 
+     impl ApplicationImpl for NeteaseCloudMusicGtk4Application {
++        fn startup(&self) {
++            self.parent_startup();
++
++            // Use the private icon theme; older desktop themes lack GTK4 icons.
++            if let Some(settings) = gtk::Settings::default() {
++                settings.set_property("gtk-icon-theme-name", "Adwaita");
++            }
++        }
++
+         // We connect to the activate callback to create a window when the application
+         // has been launched. Additionally, this callback notifies us when the user
+         // tries to launch a "second instance" of the application. When they try

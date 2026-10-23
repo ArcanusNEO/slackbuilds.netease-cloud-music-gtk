@@ -1,0 +1,18 @@
+# filename sha256 url
+netease-cloud-music-gtk-225d14fb42bc0e0fdce1cbcb640577c307efc641.tar.gz d14c48634a1c46bb3d009633e01729c9d46c1036140fe6e859217cc97e783ff7 https://codeload.github.com/gmg137/netease-cloud-music-gtk/tar.gz/225d14fb42bc0e0fdce1cbcb640577c307efc641
+adwaita-icon-theme-47.0.tar.xz ad088a22958cb8469e41d9f1bba0efb27e586a2102213cd89cc26db2e002bdfe https://download.gnome.org/sources/adwaita-icon-theme/47/adwaita-icon-theme-47.0.tar.xz
+adwaita-icon-theme-legacy-46.2.tar.xz 548480f58589a54b72d18833b755b15ffbd567e3187249d74e2e1f8f99f22fb4 https://download.gnome.org/sources/adwaita-icon-theme-legacy/46/adwaita-icon-theme-legacy-46.2.tar.xz
+glib-2.80.5.tar.xz 9f23a9de803c695bbfde7e37d6626b18b9a83869689dd79019bf3ae66c3e6771 https://download.gnome.org/sources/glib/2.80/glib-2.80.5.tar.xz
+glib-networking-2.80.1.tar.xz b80e2874157cd55071f1b6710fa0b911d5ac5de106a9ee2a4c9c7bee61782f8e https://download.gnome.org/sources/glib-networking/2.80/glib-networking-2.80.1.tar.xz
+pango-1.52.2.tar.xz d0076afe01082814b853deec99f9349ece5f2ce83908b8e58ff736b41f78a96b https://download.gnome.org/sources/pango/1.52/pango-1.52.2.tar.xz
+cairo-1.18.4.tar.xz 445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb https://cairographics.org/releases/cairo-1.18.4.tar.xz
+wayland-1.26.0.tar.xz 64176eaa46e4969903e286f8e5ef8331affc17fdf03ac9b58381d2b23162b7a3 https://gitlab.freedesktop.org/wayland/wayland/-/releases/1.26.0/downloads/wayland-1.26.0.tar.xz
+gtk-4.16.13.tar.xz ddf3d9e12b848139a945d191d5ca56b78d0647f53b55b8bca5f9902b61624498 https://download.gnome.org/sources/gtk/4.16/gtk-4.16.13.tar.xz
+libxmlb-0.3.21.tar.xz 642343c9b3eca5c234ef83d3d5f6307c78d024f2545f3cc2fa252c9e14e4efd1 https://github.com/hughsie/libxmlb/releases/download/0.3.21/libxmlb-0.3.21.tar.xz
+AppStream-1.0.3.tar.xz 5ab6f6cf644e7875a9508593962e56bb430f4e59ae0bf03be6be7029deb6baa4 https://www.freedesktop.org/software/appstream/releases/AppStream-1.0.3.tar.xz
+libadwaita-1.6.5.tar.xz d4713cfe5daeb2e537ccb6cb013c153677a3f1c29e5c166c5663e33605eb8ee2 https://download.gnome.org/sources/libadwaita/1.6/libadwaita-1.6.5.tar.xz
+gstreamer-1.24.12.tar.xz b3522d1b4fe174fff3b3c7f0603493e2367bd1c43f5804df15b634bd22b1036f https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.24.12.tar.xz
+gst-plugins-base-1.24.12.tar.xz f6efbaa8fea8d00bc380bccca76a530527b1f083e8523eafb3e9b1e18bc653d3 https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.24.12.tar.xz
+gst-plugins-good-1.24.12.tar.xz d0e66e2f935d1575f6adbef7d0a2b3faba7360344383c51bf0233b39e0489a64 https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.24.12.tar.xz
+gst-plugins-bad-1.24.12.tar.xz 3d386af3d1dbd1a06c74a6251250c269b481e703f0e3255ba89ef6c1e063afea https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.24.12.tar.xz
+gst-libav-1.24.12.tar.xz ef72c1c70a17b3c0bb283d16d09aba496d3401c927dcf5392a8a7866d9336379 https://gstreamer.freedesktop.org/src/gst-libav/gst-libav-1.24.12.tar.xz

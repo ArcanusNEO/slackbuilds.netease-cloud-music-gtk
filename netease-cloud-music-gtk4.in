@@ -1,0 +1,14 @@
+#!/bin/sh
+# Keep the application's private libraries and plugins process-local.
+set -eu
+PREFIX=@PREFIX@
+# GTK_THEME disables libadwaita's own stylesheet providers, including dark mode.
+unset GTK_THEME
+export LD_LIBRARY_PATH="$PREFIX/@LIBDIR@${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export XDG_DATA_DIRS="$PREFIX/share:${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+export GSETTINGS_SCHEMA_DIR="$PREFIX/share/glib-2.0/schemas"
+export GIO_MODULE_DIR="$PREFIX/@LIBDIR@/gio/modules"
+export GST_PLUGIN_SYSTEM_PATH_1_0="$PREFIX/@LIBDIR@/gstreamer-1.0"
+export GST_PLUGIN_PATH_1_0=
+export GST_PLUGIN_SCANNER="$PREFIX/libexec/gstreamer-1.0/gst-plugin-scanner"
+exec "$PREFIX/bin/netease-cloud-music-gtk4" "$@"
