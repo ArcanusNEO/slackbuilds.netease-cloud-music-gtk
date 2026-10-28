@@ -2,7 +2,7 @@ netease-cloud-music-gtk
 =====================
 
 SlackBuild for the native Rust/GTK4 NetEase Cloud Music player, version
-2.5.4 at commit 225d14f. Builds private GTK, libadwaita, GLib, Wayland and
+2.5.4 at commit df524ae. Builds private GTK, libadwaita, GLib, Wayland and
 GStreamer libraries under /opt/netease-cloud-music-gtk. Desktop integration
 and the launcher are installed under /usr.
 

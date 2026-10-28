@@ -6,7 +6,7 @@ umask 022
 
 PRGNAM=netease-cloud-music-gtk
 VERSION=2.5.4
-REVISION=225d14fb42bc0e0fdce1cbcb640577c307efc641
+REVISION=df524aeefe53d7d64ca118305848d5dfeb18a645
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-txz}
@@ -101,7 +101,6 @@ done < "$CWD/sources.list"
 APP_SOURCE="$WORKDIR/src/$PRGNAM-$REVISION"
 install -m 644 "$CWD/Cargo.lock" "$APP_SOURCE/Cargo.lock"
 patch --directory="$APP_SOURCE" -p1 < "$CWD/private-appearance.patch"
-patch --directory="$APP_SOURCE" -p1 < "$CWD/api-2.2.1.patch"
 
 export PATH="$RUNTIME/bin:$PATH"
 export PKG_CONFIG_PATH="$RUNTIME/$LIBDIR/pkgconfig:$RUNTIME/share/pkgconfig${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}"
@@ -221,7 +220,7 @@ for source, destination in (
 PY
 install -m 644 "$CWD/slack-desc" "$PKG/install/slack-desc"
 install -m 644 "$CWD/README" "$CWD/$PRGNAM.SlackBuild" "$CWD/sources.list" \
-  "$CWD/Cargo.lock" "$CWD/private-appearance.patch" "$CWD/api-2.2.1.patch" "$APP_SOURCE/COPYING" \
+  "$CWD/Cargo.lock" "$CWD/private-appearance.patch" "$APP_SOURCE/COPYING" \
   "$PKG/usr/doc/$PRGNAM-$VERSION/"
 
 # Keep the bundled libraries' own license notices with the package documentation.
