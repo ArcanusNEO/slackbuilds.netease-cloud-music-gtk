@@ -1,8 +1,11 @@
 netease-cloud-music-gtk
 =====================
 
-SlackBuild for the native Rust/GTK4 NetEase Cloud Music player, version
-2.5.4 at commit df524ae. Builds private GTK, libadwaita, GLib, Wayland and
+Rolling Git SlackBuild for the native Rust/GTK4 NetEase Cloud Music player.
+Each online run fetches the latest commit on upstream's default branch,
+like an AUR -git package. The package version is the commit's short hash
+(at least 12 characters), generated from the source used for that build.
+Builds private GTK, libadwaita, GLib, Wayland and
 GStreamer libraries under /opt/netease-cloud-music-gtk. Desktop integration
 and the launcher are installed under /usr.
 
@@ -10,7 +13,7 @@ Requirements
 ------------
 
 Rust >= 1.92, Cargo, Meson >= 1.1, Ninja, Python 3, a C/C++ toolchain,
-gettext, bison, flex, sassc, pkg-config and Slackware pkgtools.
+Git, gettext, bison, flex, sassc, pkg-config and Slackware pkgtools.
 System development libraries are also required, including GnuTLS >= 3.7.4,
 GdkPixbuf >= 2.42, Graphene >= 1.10, Wayland protocols >= 1.36, FFmpeg,
 X11, OpenSSL and audio codecs. The script checks major dependencies.
@@ -22,9 +25,14 @@ Run as a regular user from this directory:
 
   ./netease-cloud-music-gtk.SlackBuild
 
-Sources are downloaded to sources/ and verified against sources.list.
-Cargo.lock pins Rust dependencies. The package is written to /tmp;
-build files and logs remain under /tmp/SBo.
+The upstream Git repository is cached in sources/netease-cloud-music-gtk.git.
+Library archives are downloaded to sources/ and verified against sources.list.
+Cargo uses upstream's Cargo.lock when present, or generates one in the build
+directory when absent. The build then uses --locked to keep that resolution
+consistent for the rest of the build. The resolved lock file is included in the
+package documentation. The package is written to /tmp; build files and logs
+remain under /tmp/SBo. The .info file uses "git" as a version placeholder;
+the SlackBuild calculates the actual package version at build time.
 
 Useful options:
 
@@ -32,13 +40,17 @@ Useful options:
   FETCH_ONLY=yes ./netease-cloud-music-gtk.SlackBuild
   OFFLINE=yes CARGO_HOME=/path/to/cache ./netease-cloud-music-gtk.SlackBuild
 
-Offline builds require all source archives and Cargo dependencies to be
-cached. FETCH_ONLY downloads source archives only, not Cargo dependencies.
+OFFLINE=yes or DOWNLOAD=no reuses the cached upstream commit without fetching.
+Offline builds require the Git source, all library archives and Cargo
+dependencies for the selected commit to be cached. FETCH_ONLY fetches the
+Git source and library archives only, not Cargo dependencies.
 
 Install and run
 ---------------
 
-  sudo upgradepkg --install-new /tmp/netease-cloud-music-gtk-2.5.4-x86_64-1_SBo.txz
+Replace COMMIT_HASH with the package version printed by the build:
+
+  sudo upgradepkg --install-new /tmp/netease-cloud-music-gtk-COMMIT_HASH-x86_64-1_SBo.txz
   netease-cloud-music-gtk4
 
 The launcher sets private library and plugin paths for the application.

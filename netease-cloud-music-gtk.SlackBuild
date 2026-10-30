@@ -5,8 +5,7 @@ set -euo pipefail
 umask 022
 
 PRGNAM=netease-cloud-music-gtk
-VERSION=2.5.4
-REVISION=df524aeefe53d7d64ca118305848d5dfeb18a645
+GIT_URL=https://github.com/gmg137/netease-cloud-music-gtk.git
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 PKGTYPE=${PKGTYPE:-txz}
@@ -34,8 +33,20 @@ need()
   command -v "$1" >/dev/null || { printf 'Missing build tool: %s\n' "$1" >&2; exit 1; }
 }
 
-for tool in python3 tar curl sha256sum; do need "$tool"; done
+for tool in python3 tar curl sha256sum git; do need "$tool"; done
 mkdir -p "$SOURCES"
+APP_REPO="$SOURCES/$PRGNAM.git"
+if [[ "$DOWNLOAD" == yes && "$OFFLINE" != yes ]]; then
+  [[ -d "$APP_REPO" ]] || git init --bare "$APP_REPO"
+  git --git-dir="$APP_REPO" fetch --depth=1 "$GIT_URL" +HEAD:refs/heads/upstream
+fi
+REVISION=$(git --git-dir="$APP_REPO" rev-parse --verify 'refs/heads/upstream^{commit}') || {
+  printf 'Missing cached upstream source; run with DOWNLOAD=yes OFFLINE=no first.\n' >&2
+  exit 1
+}
+VERSION=$(git --git-dir="$APP_REPO" rev-parse --short=12 "$REVISION")
+printf 'Source commit: %s\nPackage version: %s\n' "$REVISION" "$VERSION"
+
 while read -r archive checksum url; do
   [[ -z "$archive" || "$archive" == \#* ]] && continue
   if [[ ! -f "$SOURCES/$archive" && -f "$CWD/$archive" ]]; then
@@ -59,7 +70,7 @@ while read -r archive checksum url; do
 done < "$CWD/sources.list"
 [[ "$FETCH_ONLY" == yes ]] && exit 0
 
-for tool in cc c++ meson ninja pkg-config rustc cargo git patch bison flex \
+for tool in cc c++ meson ninja pkg-config rustc cargo patch bison flex \
             msgfmt sassc readelf strip xz; do need "$tool"; done
 MAKEPKG=${MAKEPKG:-/sbin/makepkg}
 [[ -x "$MAKEPKG" ]] || { printf 'Missing makepkg: %s\n' "$MAKEPKG" >&2; exit 1; }
@@ -99,7 +110,9 @@ while read -r archive checksum url; do
   tar --extract --file "$SOURCES/$archive" --directory "$WORKDIR/src" --no-same-owner
 done < "$CWD/sources.list"
 APP_SOURCE="$WORKDIR/src/$PRGNAM-$REVISION"
-install -m 644 "$CWD/Cargo.lock" "$APP_SOURCE/Cargo.lock"
+mkdir -p "$APP_SOURCE"
+git --git-dir="$APP_REPO" archive "$REVISION" | \
+  tar --extract --directory "$APP_SOURCE" --no-same-owner
 patch --directory="$APP_SOURCE" -p1 < "$CWD/private-appearance.patch"
 
 export PATH="$RUNTIME/bin:$PATH"
@@ -114,6 +127,13 @@ export CARGO_BUILD_JOBS="$JOBS"
 export CARGO_TARGET_DIR="$WORKDIR/build/player/target"
 export RUSTFLAGS="${RUSTFLAGS:-} -C link-arg=-Wl,-rpath,$PREFIX/$LIBDIR"
 [[ "$OFFLINE" == yes ]] && export CARGO_NET_OFFLINE=true
+
+# Use upstream's lock file or let Cargo generate one, then lock this build below.
+cargo fetch --manifest-path "$APP_SOURCE/Cargo.toml" \
+  > "$WORKDIR/logs/cargo-fetch.log" 2>&1 || {
+  printf 'Cargo fetch failed; see %s/logs/cargo-fetch.log\n' "$WORKDIR" >&2
+  exit 1
+}
 
 build_meson()
 {
@@ -165,10 +185,7 @@ build_meson gst-plugins-good-1.24.12 --auto-features=disabled \
 build_meson gst-plugins-bad-1.24.12 --auto-features=disabled -Dtools=enabled
 build_meson gst-libav-1.24.12 --auto-features=disabled
 
-# Cargo's Git dependency and registry crates are cached outside the package tree.
-cargo fetch --locked --manifest-path "$APP_SOURCE/Cargo.toml" \
-  > "$WORKDIR/logs/cargo-fetch.log" 2>&1
-# Upstream's Meson target invokes cargo; require the supplied lock file there too.
+# Upstream's Meson target invokes cargo; require the resolved lock file there too.
 python3 - "$APP_SOURCE/build-aux/cargo.sh" <<'PY'
 from pathlib import Path
 import sys
@@ -220,7 +237,7 @@ for source, destination in (
 PY
 install -m 644 "$CWD/slack-desc" "$PKG/install/slack-desc"
 install -m 644 "$CWD/README" "$CWD/$PRGNAM.SlackBuild" "$CWD/sources.list" \
-  "$CWD/Cargo.lock" "$CWD/private-appearance.patch" "$APP_SOURCE/COPYING" \
+  "$APP_SOURCE/Cargo.lock" "$CWD/private-appearance.patch" "$APP_SOURCE/COPYING" \
   "$PKG/usr/doc/$PRGNAM-$VERSION/"
 
 # Keep the bundled libraries' own license notices with the package documentation.
